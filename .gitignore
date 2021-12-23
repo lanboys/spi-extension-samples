@@ -1,0 +1,22 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+
+*.iml
+*.idea/
+*target/
+target/
+*.log/
+log/
+
+*.DS_Store
+
+*webapp/file/
+
+*nohup.out
+logs
+.settings
