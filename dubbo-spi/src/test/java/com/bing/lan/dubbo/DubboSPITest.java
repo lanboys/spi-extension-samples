@@ -27,20 +27,6 @@ public class DubboSPITest {
     People teacher = extensionLoaderPeople.getExtension("teacher");
     teacher.doWork();
 
-    ExtensionLoader<ExtensionFactory> loader = ExtensionLoader.getExtensionLoader(ExtensionFactory.class);
-    ExtensionFactory extensionFactory = loader.getAdaptiveExtension();
-
-    // 通过 ExtensionFactory 获取自适应扩展类
-    // 后面 name 参数没什么用
-    Animal dog1 = extensionFactory.getExtension(Animal.class, "dog");
-
-    People student1 = extensionFactory.getExtension(People.class, "student");
-    // 具体执行哪个类，看自适应扩展类内部逻辑
-    student1.doWork();
-    student1.doWork();
-    student1.doWork();
-    student1.doWork();
-
     System.out.println("testSPI(): ");
   }
 
@@ -97,5 +83,41 @@ public class DubboSPITest {
     animal.adaptive(url);// 调用 cat 扩展类
 
     System.out.println("getAdaptiveExtensionFromMethod(): ");
+  }
+
+  /**
+   * injectExtension 自动注入
+   */
+  @Test
+  public void testInjectExtension1() {
+    ExtensionLoader<Animal> extensionLoaderAnimal = ExtensionLoader.getExtensionLoader(Animal.class);
+    Animal cat = extensionLoaderAnimal.getExtension("cat");
+    cat.run();
+    Animal dog = extensionLoaderAnimal.getExtension("dog");
+    dog.run();
+
+    System.out.println("testInjectExtension1(): ");
+  }
+
+  /**
+   * injectExtension 自动注入实现主要类 ExtensionFactory
+   */
+  @Test
+  public void testInjectExtension2() {
+    ExtensionLoader<ExtensionFactory> loader = ExtensionLoader.getExtensionLoader(ExtensionFactory.class);
+    ExtensionFactory extensionFactory = loader.getAdaptiveExtension();
+
+    // 通过 ExtensionFactory 获取自适应扩展类
+    // 后面 name 参数没什么用
+    Animal dog1 = extensionFactory.getExtension(Animal.class, "dog");
+
+    People student1 = extensionFactory.getExtension(People.class, "student");
+    // 具体执行哪个类，看自适应扩展类内部逻辑
+    student1.doWork();
+    student1.doWork();
+    student1.doWork();
+    student1.doWork();
+
+    System.out.println("testInjectExtension2(): ");
   }
 }
