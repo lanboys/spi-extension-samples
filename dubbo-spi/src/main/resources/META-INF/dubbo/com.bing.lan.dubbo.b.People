@@ -1,2 +1,3 @@
 student=com.bing.lan.dubbo.b.Student
 teacher=com.bing.lan.dubbo.b.Teacher
+adaptive=com.bing.lan.dubbo.b.AdaptivePeople
