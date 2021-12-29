@@ -1,5 +1,8 @@
 package com.bing.lan.dubbo.b;
 
+import org.apache.dubbo.common.extension.Activate;
+
+@Activate
 public class Student implements People {
 
   public Student() {

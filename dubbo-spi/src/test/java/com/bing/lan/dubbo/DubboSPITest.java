@@ -2,6 +2,7 @@ package com.bing.lan.dubbo;
 
 import com.bing.lan.dubbo.a.Animal;
 import com.bing.lan.dubbo.b.People;
+import com.bing.lan.dubbo.c.Filter;
 
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.extension.ExtensionFactory;
@@ -9,6 +10,7 @@ import org.apache.dubbo.common.extension.ExtensionLoader;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DubboSPITest {
@@ -119,5 +121,32 @@ public class DubboSPITest {
     student1.doWork();
 
     System.out.println("testInjectExtension2(): ");
+  }
+
+  /**
+   * 源码注释见【有道云笔记】 或者 git@github.com:lanboys/dubbo-1.git
+   */
+  @Test
+  public void testActivate() {
+    Map<String, String> parameters = new HashMap<>();
+
+    //parameters.put("filter", "cache,log");// 指定必须激活的扩展类，相当于  parameters.put("filter", "default,cache,log") 默认的排在最前面
+    parameters.put("filter", "cache,default,log"); // 默认的排在中间
+    //parameters.put("filter", "cache,log,-default"); //-default 表示默认的扩展类全部都不激活，除非显式添加扩展类名字进行激活
+
+    parameters.put("fa", "xxx");// 默认扩展 fa 需要通过参数控制是否激活
+    parameters.put("fb", "fb-value");// 默认扩展 fc 需要通过参数控制是否激活, fb-value 也需要匹配上
+    //parameters.put("fc", "xxx");// 默认扩展 fc 不需要参数控制，因为没配置value
+
+    URL url = new URL("http", "127.0.0.1", 8888, parameters);
+
+    ExtensionLoader<Filter> loader = ExtensionLoader.getExtensionLoader(Filter.class);
+    List<Filter> filters = loader.getActivateExtension(url, "filter", "group-provider");
+
+    for (Filter filter : filters) {
+      filter.doFilter();
+    }
+
+    System.out.println("testActivate(): ");
   }
 }

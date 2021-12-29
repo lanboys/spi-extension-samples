@@ -1,0 +1,8 @@
+fa=com.bing.lan.dubbo.c.FilterA
+fb=com.bing.lan.dubbo.c.FilterB
+fc=com.bing.lan.dubbo.c.FilterC
+fd=com.bing.lan.dubbo.c.FilterD
+fe=com.bing.lan.dubbo.c.FilterE
+cache=com.bing.lan.dubbo.c.impl.FilterCache
+validation=com.bing.lan.dubbo.c.impl.FilterValidation
+log=com.bing.lan.dubbo.c.impl.FilterLog
